@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>setHtml vs innerHtml</title>
+</head>
+<body>
+
+    <input type="text"> <button id="btn-setHtml">Add Hmtl via safe setHtml</button> <button id="btn-innerHtml">Add Hmtl
+        via dangerous
+        innerHtml</button>
+    <button id="btn-innerText">Add Hmtl
+        via limited use
+        innerText</button>
+    <div></div>
+    <p>
+        Learned from https://www.youtube.com/shorts/d3BuRBNBPc8
+    </p>
+    <p>setHTML() hasn't made it's way to Firefox just yet
+        https://developer.mozilla.org/en-US/docs/Web/API/Element/setHTML</p>
+    <script>
+        const button = document.getElementById("btn-setHtml");
+        const buttonInnerHtml = document.getElementById("btn-innerHtml");
+        const buttonInnerText = document.getElementById("btn-innerText");
+        const container = document.querySelector("div")
+        const input = document.querySelector("input")
+
+        // will filter out malicous code
+        button.addEventListener("click", () => {
+            const html = `<h1>Hello safe setHTML()</h1>${input.value}`
+            container.setHTML(html)
+        })
+
+        // try entering this to show hack risk <img src="" onerror="alert('ALERT box showing up')" />
+        buttonInnerHtml.addEventListener("click", () => {
+            const html = `<h1>Hello dangerous innerHtml</h1>${input.value}`
+            container.innerHTML = html
+        })
+
+        buttonInnerText.addEventListener("click", () => {
+            const html = `<h1>Hello limited use innerText</h1>${input.value}`
+            container.innerText = html
+        })
+    </script>
+</body>
+</html>
